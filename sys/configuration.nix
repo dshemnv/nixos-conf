@@ -83,12 +83,21 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dshem = {
     isNormalUser = true;
     description = "Den";
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" ];
   };
+
+  # Fonts
+  fonts.fonts = with pkgs; [
+    (nerdfonts.override { fonts = ["JetBrainsMono"];})
+    noto-fonts-emoji
+    noto-fonts
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

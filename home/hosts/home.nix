@@ -24,13 +24,32 @@
     lshw
     floorp
     discord
-    git
   ];
 
-  programs.bash = {
+  home.shellAliases = {
+    rebuild = "sudo nixos-rebuild switch --flake /home/dshem/nixos";
+  };
+
+  programs.zsh = {
     enable = true;
-    shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake /home/dshem/nixos";
+    autocd = true;
+    autosuggestion.enable = true;
+    defaultKeymap = "viins";
+    history.size = 1000;
+    history.path = "${config.xdg.dataHome}/zsh/history";
+    zplug = {
+      enable = true;
+      plugins = [
+        {name = "zdharma-continuum/fast-syntax-highlighting";}
+      ];
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      add_newline = false;
     };
   };
 
