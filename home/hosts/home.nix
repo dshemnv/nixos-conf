@@ -24,30 +24,25 @@
     lshw
     floorp
     discord
+    zinit
   ];
+
 
   home.shellAliases = {
     rebuild = "sudo nixos-rebuild switch --flake /home/dshem/nixos";
   };
 
-  programs.zsh = {
+  programs.fish = {
     enable = true;
-    autocd = true;
-    autosuggestion.enable = true;
-    defaultKeymap = "viins";
-    history.size = 1000;
-    history.path = "${config.xdg.dataHome}/zsh/history";
-    zplug = {
-      enable = true;
-      plugins = [
-        {name = "zdharma-continuum/fast-syntax-highlighting";}
-      ];
-    };
+    interactiveShellInit = ''
+      set -g fish_key_bindings fish_vi_key_bindings
+      function fish_greeting; end
+      '';
   };
 
   programs.starship = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       add_newline = false;
     };
@@ -57,6 +52,24 @@
     enable = true;
     userName = "dshem";
     userEmail = "dshem@gmx.fr";
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+    options = ["--cmd cd"];
+  };
+
+  programs.atuin = {
+    enable = true;
+    enableFishIntegration = true;
+    flags = [
+      "--disable-up-arrow"
+    ];
+  };
+
+  programs.fzf = {
+    enable = true;
   };
 
   programs.home-manager.enable = true;
