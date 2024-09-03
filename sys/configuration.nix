@@ -60,10 +60,14 @@
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+    extraLayouts.qwerty-fr = {
+      description = "US layout with French accents";
+      languages = [ "eng" ];
+      symbolsFile = "${pkgs.qwerty-fr}/share/X11/xkb/symbols/us_qwerty-fr";
+    };
+    layout = "qwerty-fr,fr,ru";
   };
-
+  
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -83,12 +87,12 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  programs.zsh.enable = true;
+  programs.fish.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dshem = {
     isNormalUser = true;
     description = "Den";
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
@@ -106,6 +110,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    qwerty-fr
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
